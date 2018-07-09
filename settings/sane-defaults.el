@@ -1,12 +1,18 @@
 ;; Allow pasting selection outside of Emacs
 (setq x-select-enable-clipboard t)
 
+;;  Just blink the modeline on errors.
+(setq visible-bell nil)
+(setq ring-bell-function (lambda ()
+                           (invert-face 'mode-line)
+                           (run-with-timer 0.05 nil 'invert-face 'mode-line)))
+
 ;; Auto refresh buffers
 ;; (global-auto-revert-mode 1)
 
 ;; Also auto refresh dired, but be quiet about it
 (setq global-auto-revert-non-file-buffers t)
-(setq auto-revert-verbose nil)
+(setq auto-revert-verbose t)
 
 ;; Show keystrokes in progress
 (setq echo-keystrokes 0.1)
@@ -42,9 +48,6 @@
 ;; Remove text in active region if inserting text
 (delete-selection-mode 1)
 
-;; Don't highlight matches with jump-char - it's distracting
-(setq jump-char-lazy-highlight-face nil)
-
 ;; Always display line and column numbers
 (setq line-number-mode t)
 (setq column-number-mode t)
@@ -72,9 +75,6 @@
 ;; Don't break lines for me, please
 (setq-default truncate-lines t)
 
-;; Keep cursor away from edges when scrolling up/down
-(require 'smooth-scrolling)
-
 ;; Allow recursive minibuffers
 (setq enable-recursive-minibuffers t)
 
@@ -86,11 +86,6 @@
 
 ;; Fontify org-mode code blocks
 (setq org-src-fontify-natively t)
-
-;; Represent undo-history as an actual tree (visualize with C-x u)
-(setq undo-tree-mode-lighter "")
-(require 'undo-tree)
-(global-undo-tree-mode)
 
 ;; Sentences do not need double spaces to end. Period.
 (set-default 'sentence-end-double-space nil)
