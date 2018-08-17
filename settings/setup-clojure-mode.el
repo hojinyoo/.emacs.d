@@ -1,3 +1,9 @@
+;;; setup-clojure-mode.el --- modules for clojure development
+
+;;; Commentary:
+
+;;; Code:
+
 (use-package cider :config (setq cider-inject-dependencies-at-jack-in nil))
 (use-package clojure-mode)
 (use-package clojure-snippets)
@@ -67,3 +73,4 @@
 ;; :repl-options {:init (set! *print-length* 50)}
 
 (provide 'setup-clojure-mode)
+;;; setup-clojure-mode.el ends here
