@@ -209,6 +209,9 @@ is non-nil also call `browse-url'."
 (use-package org-ref
   :config
   (setq reftex-default-bibliography '("~/Dropbox/Bib/index.bib"))
+  (require 'org-ref-arxiv)
+  (require 'org-ref-pdf)
+  (setq org-ref-completion-library 'org-ref-ivy-cite)
   ;; see org-ref for use of these variables
   (setq org-ref-bibliography-notes "~/Dropbox/org/notes/"
         org-ref-default-bibliography '("~/Dropbox/Bib/index.bib")
