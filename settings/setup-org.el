@@ -34,6 +34,10 @@
 ;; (setq org-default-notes-file (concat org-directory "/notes.org"))
 ;; (define-key global-map (kbd "M-<f6>") 'org-capture)
 
+(define-key global-map "\C-cl" 'org-store-link)
+(define-key global-map "\C-ca" 'org-agenda)
+
+(setq org-agenda-files (list "~/Dropbox/org/"))
 (setq org-log-done t)
 
 (setq org-todo-keywords
@@ -178,6 +182,44 @@ specified location."
     (org-macro-replace-all nikola-macro-templates)
     (org-html-export-as-html nil nil t t)
     (write-file outfile nil)))
+
+(use-package ivy-bibtex
+  :config
+  (autoload 'ivy-bibtex "ivy-bibtex" "" t)
+  ;; ivy-bibtex requires ivy's `ivy--regex-ignore-order` regex builder, which
+  ;; ignores the order of regexp tokens when searching for matching candidates.
+  ;; Add something like this to your init file:
+  (setq ivy-re-builders-alist
+        '((ivy-bibtex . ivy--regex-ignore-order)
+          (t . ivy--regex-plus)))
+  (setq bibtex-bibliography "~/Dropbox/Bib/index.bib" ;; where your references are stored
+        bibtex-library-path '("~/Dropbox/Bib/papers/" "~/Dropbox/Bib/books/") ;; where your pdfs etc are stored
+        bibtex-notes-path "~/Dropbox/org/notes/" ;; where your notes are stored
+        bibtex-completion-bibliography "~/Dropbox/Bib/index.bib" ;; writing completion
+        bibtex-completion-notes-path "~/Dropbox/org/notes/"
+        bibtex-completion-pdf-field "file"))
+
+(use-package org-ref
+  :config
+  (setq reftex-default-bibliography '("~/Dropbox/Bib/index.bib"))
+  (require 'org-ref-arxiv)
+  (require 'org-ref-pdf)
+  (setq org-ref-completion-library 'org-ref-ivy-cite)
+  ;; see org-ref for use of these variables
+  (setq org-ref-bibliography-notes "~/Dropbox/org/notes/"
+        org-ref-default-bibliography '("~/Dropbox/Bib/index.bib")
+        org-ref-pdf-directory "~/Dropbox/Bib/lib"))
+
+(use-package interleave)
+
+(use-package org-cliplink
+  :config
+  (global-set-key (kbd "C-x p i") 'org-cliplink)
+  (setq org-capture-templates
+   '(("K" "Cliplink capture task" entry (file "")
+      "* TODO %(org-cliplink-capture) \n  SCHEDULED: %t\n" :empty-lines 1))))
+
+(use-package org-download)
 
 (provide 'setup-org)
 ;;; setup-org.el ends here

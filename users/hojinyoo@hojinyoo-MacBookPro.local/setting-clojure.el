@@ -3,21 +3,21 @@
 ;;; Code:
 
 (require 'setup-clojure-mode)
-(require 'kubemacider)
+; (require 'kubemacider)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; clojure mode hook and helpers
 
-(defun clojure-mode-custom-indent ()
-  "Custom identation."
-  (put-clojure-indent 'fnk 'defun)
-  (put-clojure-indent 'defnk 'defun)
-  (put-clojure-indent 'for-map 1)
-  (put-clojure-indent 'pfor-map 1)
-  (put-clojure-indent 'instance 2)
-  (put-clojure-indent 'inline 1)
-  (put-clojure-indent 'letk 1)
-  (put-clojure-indent 'fdef 0))
+;; (defun clojure-mode-custom-indent ()
+;;   "Custom identation."
+;;   (put-clojure-indent 'fnk 'defun)
+;;   (put-clojure-indent 'defnk 'defun)
+;;   (put-clojure-indent 'for-map 1)
+;;   (put-clojure-indent 'pfor-map 1)
+;;   (put-clojure-indent 'instance 2)
+;;   (put-clojure-indent 'inline 1)
+;;   (put-clojure-indent 'letk 1)
+;;   (put-clojure-indent 'fdef 0))
 
 (defun indent-whole-buffer ()
   "Indent whole buffer."
@@ -35,11 +35,11 @@
 
 (defun lint-before-save ()
   "Command for linting."
-  (clojure-mode-custom-indent)
-  (local-set-key (kbd "C-c C-i") 'indent-whole-buffer)
-  (local-set-key (kbd "C-c C-/") 'cider-test-run-ns-tests)
-  (setq c-basic-offset 4)
-  (setq tab-width 4)
+  ; (clojure-mode-custom-indent)
+  ; (local-set-key (kbd "C-c C-i") 'indent-whole-buffer)
+  ; (local-set-key (kbd "C-c C-/") 'cider-test-run-ns-tests)
+  ; (setq c-basic-offset 4)
+  ; (setq tab-width 4)
   (setq indent-tabs-mode nil)
   (setq cider-auto-select-error-buffer nil)
 
