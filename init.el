@@ -22,7 +22,7 @@
 
 ;; User specific settings
 (setq user-settings-dir
-      (concat user-emacs-directory "users/" user-login-name "@" system-name))
+      (concat user-emacs-directory "users/" user-login-name "@" (car (split-string system-name "\\."))))
 (add-to-list 'load-path user-settings-dir)
 
 ;; Add external projects to load path
