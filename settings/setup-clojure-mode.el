@@ -4,6 +4,10 @@
 
 ;;; Code:
 
+(straight-use-package
+ '(parseedn :type git :host github :repo "clojure-emacs/parseedn"))
+(use-package parseedn)
+
 (use-package cider :config (setq cider-inject-dependencies-at-jack-in nil))
 (use-package clojure-mode)
 (use-package clojure-snippets)

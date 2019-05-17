@@ -17,7 +17,9 @@
 ;;   (put-clojure-indent 'instance 2)
 ;;   (put-clojure-indent 'inline 1)
 ;;   (put-clojure-indent 'letk 1)
-;;   (put-clojure-indent 'fdef 0))
+;;   (put-clojure-indent 'fdef 0)
+;;   (put-clojure-indent '>defn 'defun))
+;; (clojure-mode-custom-indent)
 
 (defun indent-whole-buffer ()
   "Indent whole buffer."

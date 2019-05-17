@@ -1,3 +1,7 @@
+;;; setting-misc.el --- misc settings
+;;; Commentary:
+;;; Code:
+
 (defun switch-to-previous-buffer ()
   "Switch to previously open buffer.
 Repeated invocations toggle between the two most recently open buffers."
@@ -10,7 +14,6 @@ Repeated invocations toggle between the two most recently open buffers."
 ;; (set-face-attribute 'default nil :height 125)
 
 (use-package wgrep)
-(use-package git-link)
 
 (use-package dumb-jump
   :bind (("M-g o" . dumb-jump-go-other-window)
@@ -21,3 +24,12 @@ Repeated invocations toggle between the two most recently open buffers."
   :config
   (setq dumb-jump-selector 'ivy)
   (setq dumb-jump-aggressive nil))
+
+;; from https://www.emacswiki.org/emacs/DropBox
+;; avoid to temporary files in Dropbox directiory
+(add-to-list 'auto-save-file-name-transforms '("\\`.*/Dropbox/.*" "~/.emacs/backups" t))
+(add-to-list 'backup-directory-alist '("\\`.*/Dropbox/.*" . "~/.emacs/backups"))
+
+(use-package rjsx-mode)
+
+;;; setting-misc.el ends here
