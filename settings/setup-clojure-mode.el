@@ -14,6 +14,7 @@
 (use-package clojure-mode-extra-font-locking)
 (use-package clj-refactor)
 (use-package flycheck-clojure)
+(use-package flycheck-joker)
 
 ;; (use-package ob-clojure
 ;;   :ensure t
