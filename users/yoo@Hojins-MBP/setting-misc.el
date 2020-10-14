@@ -32,4 +32,18 @@ Repeated invocations toggle between the two most recently open buffers."
 
 (use-package rjsx-mode)
 
+;; For faster Tramp
+;; from https://lists.gnu.org/archive/html/help-gnu-emacs/2017-08/msg00168.html
+;; and https://www.gnu.org/software/emacs/manual/html_node/tramp/Frequently-Asked-Questions.html
+(setq remote-file-name-inhibit-cache 3600)
+(setq vc-handled-backends '(Git))
+;; (setq vc-ignore-dir-regexp
+;;       (format "\\(%s\\)\\|\\(%s\\)"
+;;               vc-ignore-dir-regexp
+;;               tramp-file-name-regexp))
+
+;; https://github.com/syl20bnr/spacemacs/issues/11381
+(defadvice projectile-project-root (around ignore-remote first activate)
+  (unless (file-remote-p default-directory) ad-do-it))
+
 ;;; setting-misc.el ends here

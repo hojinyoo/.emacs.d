@@ -3,7 +3,10 @@
 ;;; Code:
 
 (use-package jedi)
-(use-package py-autopep8)
+(use-package py-autopep8
+  :config
+  (setq py-autopep8-options '("--max-line-length=120"
+                              "max-complexity = 10")))
 
 (use-package elpy
   :config

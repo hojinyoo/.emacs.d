@@ -8,27 +8,21 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; clojure mode hook and helpers
 
-;; (defun clojure-mode-custom-indent ()
-;;   "Custom identation."
-;;   (put-clojure-indent 'fnk 'defun)
-;;   (put-clojure-indent 'defnk 'defun)
-;;   (put-clojure-indent 'for-map 1)
-;;   (put-clojure-indent 'pfor-map 1)
-;;   (put-clojure-indent 'instance 2)
-;;   (put-clojure-indent 'inline 1)
-;;   (put-clojure-indent 'letk 1)
-;;   (put-clojure-indent 'fdef 0)
-;;   (put-clojure-indent '>defn 'defun))
-;; (clojure-mode-custom-indent)
+(defun clojure-mode-custom-indent ()
+  "Custom identation."
+  (put-clojure-indent 'fnk 'defun)
+  (put-clojure-indent 'defnk 'defun)
+  (put-clojure-indent 'for-map 1)
+  (put-clojure-indent 'async 1)
+  (put-clojure-indent 'pfor-map 1)
+  (put-clojure-indent 'instance 2)
+  (put-clojure-indent 'inline 1)
+  (put-clojure-indent 'letk 1)
+  (put-clojure-indent 'fdef 1)
+  (put-clojure-indent '>defn 'defun))
+(clojure-mode-custom-indent)
 
 (defun indent-whole-buffer ()
-  "Indent whole buffer."
-  (interactive)
-  (delete-trailing-whitespace)
-  (indent-region (point-min) (point-max) nil)
-  (untabify (point-min) (point-max)))
-
-(defun indent-whole-buffer-c ()
   "Indent whole buffer."
   (interactive)
   (delete-trailing-whitespace)
