@@ -1,3 +1,12 @@
+(use-package transient :ensure t)
+
+(use-package magit-popup :ensure t)
+
+(use-package magit
+  :config
+  (projectile-global-mode)
+  (setq magit-completing-read-function 'ivy-completing-read))
+
 ;; full screen magit-status
 
 (defun magit-status-fullscreen (prefix)
@@ -29,14 +38,5 @@
   (interactive)
   (kill-buffer)
   (jump-to-register :vc-annotate-fullscreen))
-
-(eval-after-load "vc-annotate"
-  '(progn
-     (defadvice vc-annotate (around fullscreen activate)
-       (window-configuration-to-register :vc-annotate-fullscreen)
-       ad-do-it
-       (delete-other-windows))
-
-     (define-key vc-annotate-mode-map (kbd "q") 'vc-annotate-quit)))
 
 (provide 'setup-magit)

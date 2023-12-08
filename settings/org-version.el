@@ -36,6 +36,3 @@ Inserted by installing org-mode or when a release is made."
                "HEAD")))))
 
 (provide 'org-version)
-
-;; (straight-use-package 'org)
-(straight-use-package 'org-plus-contrib)

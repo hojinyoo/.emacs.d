@@ -33,4 +33,8 @@ Repeated invocations toggle between the two most recently open buffers."
 (add-to-list 'backup-directory-alist '("\\`.*/Dropbox/.*" . "~/.emacs/backups"))
 
 (use-package rjsx-mode)
+
+(use-package ess :ensure t)
+
+(use-package yaml-mode :ensure t)
 ;;; setting-misc.el ends here

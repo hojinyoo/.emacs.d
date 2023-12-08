@@ -146,11 +146,6 @@
   :config
   (counsel-projectile-mode))
 
-(use-package magit
-  :config
-  (projectile-global-mode)
-  (setq magit-completing-read-function 'ivy-completing-read))
-
 ;; Represent undo-history as an actual tree (visualize with C-x u)
 (use-package undo-tree
   :config
@@ -173,7 +168,7 @@
 ;;   ;; use normal isearch
 ;;   (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward))
 
-(require 'setup-org)
+;; (require 'setup-org)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Visual Environment ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

@@ -4,6 +4,8 @@
 
 ;;; Code:
 
+(straight-use-package 'org :ensure t)
+
 (require 'org-version)
 
 (use-package htmlize)

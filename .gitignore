@@ -7,11 +7,15 @@ tramp
 elpa
 swank
 emms
+history
 site-lisp/adventur-mode
 *.elc
+*.pyc
 .DS_Store
 .yas-compiled-snippets.el
 .cask
+/elpy/
+/eln-cache/
 /url/
 /var/
 /.sx/
@@ -27,3 +31,4 @@ recentf
 /smex-items
 /custom.el
 /cider-history
+/transient/history.el

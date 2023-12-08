@@ -20,8 +20,8 @@
 ;;   :ensure t
 ;;   :config (setq org-babel-clojure-backend 'cider))
 
-(require 'ob-clojure)
-(setq org-babel-clojure-backend 'cider)
+;; (require 'ob-clojure)
+;; (setq org-babel-clojure-backend 'cider)
 
 ;;; clojure-mode
 (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)

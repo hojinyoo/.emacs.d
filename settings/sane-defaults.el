@@ -82,10 +82,10 @@
 (setq gc-cons-threshold 20000000)
 
 ;; org-mode: Don't ruin S-arrow to switch windows please (use M-+ and M-- instead to toggle)
-(setq org-replace-disputed-keys t)
+;; (setq org-replace-disputed-keys t)
 
 ;; Fontify org-mode code blocks
-(setq org-src-fontify-natively t)
+;; (setq org-src-fontify-natively t)
 
 ;; Sentences do not need double spaces to end. Period.
 (set-default 'sentence-end-double-space nil)
@@ -127,5 +127,8 @@
 
 ;; preseve window layout
 (desktop-save-mode 0)
+
+;; Prevent undo tree files from polluting your git repo
+(setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
 
 (provide 'sane-defaults)
