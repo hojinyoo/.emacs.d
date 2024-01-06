@@ -105,12 +105,16 @@
   (define-key global-map (kbd "C-c q") 'vr/query-replace)
   (define-key global-map (kbd "C-c r") 'vr/replace))
 
-(use-package guide-key
-  :config
-  (setq guide-key/guide-key-sequence '("C-x r" "C-x 4" "C-x v" "C-x 8" "C-x +" "C-h" "C-c"))
-  (guide-key-mode 1)
-  (setq guide-key/recursive-key-sequence-flag t)
-  (setq guide-key/popup-window-position 'bottom))
+;; (use-package guide-key
+;;   :config
+;;   (setq guide-key/guide-key-sequence '("C-x r" "C-x 4" "C-x v" "C-x 8" "C-x +" "C-h" "C-c"))
+;;   (guide-key-mode 1)
+;;   (setq guide-key/recursive-key-sequence-flag t)
+;;   (setq guide-key/popup-window-position 'bottom))
+
+(use-package which-key)
+
+
 
 ;; highlight escape characters
 (use-package highlight-escape-sequences
@@ -176,20 +180,20 @@
   :config (load-theme 'zenburn t))
 (set-face-attribute 'region nil :background "#555")
 
-(use-package smart-mode-line
-  :config
-  ;; (setq powerline-arrow-shape 'curve)
-  ;; (setq powerline-default-separator-dir '(right . left))
-  ;; (setq sml/theme 'powerline)
-  ;; (setq sml/mode-width 0)
-  ;; (setq sml/name-width 20)
-  ;; (rich-minority-mode 1)
-  ;; (setf rm-blacklist "")
-  ;; (setq sml/theme 'dark)
-  ;; (setq sml/theme 'light)
-  (setq sml/theme 'respectful)
-  (setq sml/active-background-color "black")
-  (sml/setup))
+;; (use-package smart-mode-line
+;;   :config
+;;   ;; (setq powerline-arrow-shape 'curve)
+;;   ;; (setq powerline-default-separator-dir '(right . left))
+;;   ;; (setq sml/theme 'powerline)
+;;   ;; (setq sml/mode-width 0)
+;;   ;; (setq sml/name-width 20)
+;;   ;; (rich-minority-mode 1)
+;;   ;; (setf rm-blacklist "")
+;;   ;; (setq sml/theme 'dark)
+;;   ;; (setq sml/theme 'light)
+;;   (setq sml/theme 'respectful)
+;;   (setq sml/active-background-color "black")
+;;   (sml/setup))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Language General ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

@@ -9,18 +9,19 @@
                               "max-complexity = 10")))
 
 (use-package elpy
-  :config
-  (elpy-enable)
-  (remove-hook 'elpy-modules 'elpy-module-flymake)
-  (add-hook 'elpy-mode-hook 'flycheck-mode)
-  (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
-  (setq elpy-rpc-backend "jedi")
-  (eval-after-load 'elpy
-          '(progn
-             (define-key elpy-mode-map (kbd "<M-up>") nil)
-             (define-key elpy-mode-map (kbd "<M-down>") nil)
-             (define-key elpy-mode-map (kbd "<C-left>") nil)
-             (define-key elpy-mode-map (kbd "<C-right>") nil))))
+  ;; :config
+  ;; (elpy-enable)
+  ;; (remove-hook 'elpy-modules 'elpy-module-flymake)
+  ;; (add-hook 'elpy-mode-hook 'flycheck-mode)
+  ;; (add-hook 'elpy-mode-hook 'py-autopep8-mode)
+  ;; (setq elpy-rpc-backend "jedi")
+  ;; (eval-after-load 'elpy
+  ;;         '(progn
+  ;;            (define-key elpy-mode-map (kbd "<M-up>") nil)
+  ;;            (define-key elpy-mode-map (kbd "<M-down>") nil)
+  ;;            (define-key elpy-mode-map (kbd "<C-left>") nil)
+  ;;            (define-key elpy-mode-map (kbd "<C-right>") nil)))
+  )
 
 ;; (use-package ein
 ;;   :ensure t
@@ -50,7 +51,7 @@
 ;; https://github.com/millejoh/emacs-ipython-notebook/issues/191
 ;; (setenv "JUPYTER_CONSOLE_TEST" "1")
 ;; https://github.com/jorgenschaefer/elpy/issues/887
-(setq python-shell-completion-native-enable nil)
+;; (setq python-shell-completion-native-enable nil)
 
 ;; (add-hook 'python-mode-hook
 ;;           (progn
@@ -58,11 +59,11 @@
 ;;             (local-set-key (kbd "<C-up>") 'sgml-skip-tag-forward)
 ;;             (local-set-key (kbd "<C-down>") 'sgml-skip-tag-backward))
 
-(setq python-shell-interpreter "jupyter"
-      python-shell-interpreter-args "console")
+;; (setq python-shell-interpreter "jupyter"
+;;       python-shell-interpreter-args "console")
 
 ;; (setq python-shell-interpreter-args "--simple-prompt -i")
-(setq python-shell-interpreter-interactive-arg "console")
+;; (setq python-shell-interpreter-interactive-arg "console")
 
 ;; cat ~/.config/flake8
 ;; [flake8]
