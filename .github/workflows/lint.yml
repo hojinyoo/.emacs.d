@@ -1,0 +1,29 @@
+name: Lint Emacs Lisp
+
+on:
+  push:
+    branches: [master, main]
+    paths:
+      - '**.el'
+      - 'Makefile'
+  pull_request:
+    branches: [master, main]
+    paths:
+      - '**.el'
+      - 'Makefile'
+
+jobs:
+  byte-compile:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Emacs
+        uses: purcell/setup-emacs@master
+        with:
+          version: '29.4'
+
+      - name: Byte-compile
+        run: make lint

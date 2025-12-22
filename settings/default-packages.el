@@ -1,230 +1,162 @@
-;;; default-package.el --- Loading default packages
+;;; default-packages.el --- Default package configuration -*- lexical-binding: t; -*-
 
 ;;; Commentary:
-;; Default packages
+;;
+;; This file configures packages that are used across all environments.
+;; Packages are installed via straight.el (configured in setup-straight.el).
 
 ;;; Code:
 
-(use-package rainbow-delimiters)
-(use-package rainbow-mode)
+;;;; Completion Framework (Ivy/Counsel)
 
-;; expand region
-(use-package expand-region
+(use-package ivy
+  :diminish
   :config
-  (global-set-key (kbd "C-=") 'er/expand-region)
-  ;; Don't use expand-region fast keys
-  (setq expand-region-fast-keys-enabled nil)
-  ;; Show expand-region command used
-  (setq er--show-expansion-message t)
-  (global-set-key (kbd "C-=") 'er/expand-region))
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-count-format "(%d/%d) "))
 
-;; save places in files between sessions
-(use-package saveplace
+(use-package counsel
+  :diminish
+  :after ivy
   :config
-  (save-place-mode 1)
-  (setq save-place-file (expand-file-name ".places" user-emacs-directory)))
+  (counsel-mode 1)
+  :bind (("M-x" . counsel-M-x)
+         ("C-x C-f" . counsel-find-file)
+         ("C-c C-r" . ivy-resume)))
 
-;; code completion
+(use-package swiper
+  :after ivy
+  :bind (("C-s" . swiper)
+         ("C-r" . swiper-backward)))
+
+;;;; Project Management
+
+(use-package projectile
+  :diminish
+  :config
+  (projectile-mode 1)
+  (setq projectile-completion-system 'ivy)
+  :bind-keymap ("C-c p" . projectile-command-map))
+
+(use-package counsel-projectile
+  :after (counsel projectile)
+  :config
+  (counsel-projectile-mode 1))
+
+;;;; Code Completion
+
 (use-package company
+  :diminish
   :config
-  (global-company-mode)
-  (global-set-key (kbd "TAB") #'company-indent-or-complete-common))
+  (global-company-mode 1)
+  :bind (:map company-active-map
+         ("TAB" . company-complete-common-or-cycle)
+         ("<tab>" . company-complete-common-or-cycle)))
 
-;; bash completion
-(use-package bash-completion
+;;;; Editing Enhancements
+
+(use-package expand-region
+  :bind ("C-=" . er/expand-region)
   :config
-  (bash-completion-setup))
+  (setq expand-region-fast-keys-enabled nil)
+  (setq er--show-expansion-message t))
 
-;; auto-complete commands
-;; (use-package icicles
-;;   :config
-;;   (icy-mode 1))
-
-;; dynamic abbrev expansion, similar to auto-completion
-;; (use-package dabbrev
-;;   :defer t
-;;   :init (setf abbrev-file-name (locate-user-emacs-file "local/abbrev_defs"))
-;;   :config (setf dabbrev-case-fold-search nil))
-
-;; (autoload 'auto-complete-mode "auto-complete" nil t)
-
-;; frame zoom in/out
-;; (use-package zoom-frm :ensure t)
-
-;; (use-package dired
-;;   :defer t
-;;   :config
-;;   (progn
-;;     (add-hook 'dired-mode-hook #'toggle-truncate-lines)
-;;     (setf dired-listing-switches "-alhG"
-;;           dired-guess-shell-alist-user
-;;           '(("\\.pdf\\'" "evince")
-;;             ("\\(\\.ods\\|\\.xlsx?\\|\\.docx?\\|\\.csv\\)\\'" "libreoffice")
-;;             ("\\(\\.png\\|\\.jpe?g\\)\\'" "qiv")
-;;             ("\\.gif\\'" "animate")))))
-
-;; This option to reduce initial connection time by saving connection history in previous sessions
-;; (use-package tramp
-;;   :defer t
-;;   :config
-;;   (setf tramp-persistency-file-name
-;;         (concat temporary-file-directory "tramp-" (user-login-name))))
-
-;; (use-package framemove
-;;   :ensure t
-;;   :config
-;;   (windmove-default-keybindings)
-;;   (setq framemove-hook-into-windmove t))
-
-;; FIXME : interesting package. Try this : Comint mode is a package that defines a general command-interpreter-in-a-buffer.
-;; (use-package comint
-;;   :defer t
-;;   :config
-;;   (progn
-;;     (define-key comint-mode-map (kbd "<down>") #'comint-next-input)
-;;     (define-key comint-mode-map (kbd "<up>") #'comint-previous-input)
-;;     (define-key comint-mode-map (kbd "C-n") #'comint-next-input)
-;;     (define-key comint-mode-map (kbd "C-p") #'comint-previous-input)
-;;     (define-key comint-mode-map (kbd "C-r") #'comint-history-isearch-backward)
-;;     (setf comint-prompt-read-only t
-;;           comint-history-isearch t)))
-
-;; give a unique for buffers
-(require 'uniquify)
-(setf uniquify-buffer-name-style 'post-forward-angle-brackets)
-
-;; navigate frame configurations
-(use-package winner
+(use-package smartparens
+  :diminish
   :config
-  (winner-mode 1)
-  (windmove-default-keybindings))
+  ;; Declare org-mode functions to suppress native-comp warnings
+  (declare-function org-in-src-block-p "org" ())
+  (declare-function org-element-at-point "org-element" ())
+  (require 'smartparens-config)
+  (smartparens-global-strict-mode 1)
+  (sp-use-paredit-bindings))
 
-;; shows the regexp result visually
+(use-package multiple-cursors
+  :bind (("C-S-c C-S-c" . mc/edit-lines)
+         ("C->" . mc/mark-next-like-this)
+         ("C-<" . mc/mark-previous-like-this)
+         ("C-c C-<" . mc/mark-all-like-this)))
+
+(use-package vundo
+  :bind ("C-x u" . vundo)
+  :config
+  (setq vundo-compact-display t))
+
 (use-package visual-regexp
-  :config
-  (define-key global-map (kbd "C-c q") 'vr/query-replace)
-  (define-key global-map (kbd "C-c r") 'vr/replace))
+  :after multiple-cursors
+  :bind (("C-c q" . vr/query-replace)
+         ("C-c r" . vr/replace)))
 
-;; (use-package guide-key
-;;   :config
-;;   (setq guide-key/guide-key-sequence '("C-x r" "C-x 4" "C-x v" "C-x 8" "C-x +" "C-h" "C-c"))
-;;   (guide-key-mode 1)
-;;   (setq guide-key/recursive-key-sequence-flag t)
-;;   (setq guide-key/popup-window-position 'bottom))
+;;;; Syntax & Highlighting
 
-(use-package which-key)
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
 
+(use-package rainbow-mode
+  :diminish
+  :hook (prog-mode . rainbow-mode))
 
-
-;; highlight escape characters
 (use-package highlight-escape-sequences
   :config
+  (hes-mode 1)
   (put 'font-lock-regexp-grouping-backslash 'face-alias 'font-lock-builtin-face)
   (put 'hes-escape-backslash-face 'face-alias 'font-lock-builtin-face)
   (put 'hes-escape-sequence-face 'face-alias 'font-lock-builtin-face))
 
-(use-package ivy
-  :init (ivy-mode 1)
-  :bind (("C-c C-r" . ivy-resume)))
-
-(use-package counsel)
-
-;; smex should be later than ivy
-(use-package smex
-  :config
-  (smex-initialize)
-  :bind (("M-x" . smex) ("C-c C-c M-x" . execute-extended-command)))
-
-(use-package smartparens
-  :config
-  (require 'smartparens-config)
-  (smartparens-global-strict-mode t)
-  (sp-use-paredit-bindings))
-
-(use-package projectile
-  :config
-  (projectile-global-mode)
-  (setq projectile-completion-system 'ivy))
-
-(use-package counsel-projectile
-  :config
-  (counsel-projectile-mode))
-
-;; Represent undo-history as an actual tree (visualize with C-x u)
-(use-package undo-tree
-  :config
-  (setq undo-tree-mode-lighter "")
-  (global-undo-tree-mode))
-
-(declare git-link-tree)
-(use-package git-link
-  :config (setq git-link-open-in-browser t)
-  :bind (("C-M-;" . git-link-homepage)
-         ("C-M-'" . git-link)))
-
-;; (use-package pdf-tools
-;;   :config
-;;   (pdf-tools-install)
-;;   ;; open pdfs scaled to fit page
-;;   (setq-default pdf-view-display-size 'fit-page)
-;;   ;; automatically annotate highlights
-;;   (setq pdf-annot-activate-created-annotations t)
-;;   ;; use normal isearch
-;;   (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward))
-
-;; (require 'setup-org)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Visual Environment ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(use-package zenburn-theme
-  :config (load-theme 'zenburn t))
-(set-face-attribute 'region nil :background "#555")
-
-;; (use-package smart-mode-line
-;;   :config
-;;   ;; (setq powerline-arrow-shape 'curve)
-;;   ;; (setq powerline-default-separator-dir '(right . left))
-;;   ;; (setq sml/theme 'powerline)
-;;   ;; (setq sml/mode-width 0)
-;;   ;; (setq sml/name-width 20)
-;;   ;; (rich-minority-mode 1)
-;;   ;; (setf rm-blacklist "")
-;;   ;; (setq sml/theme 'dark)
-;;   ;; (setq sml/theme 'light)
-;;   (setq sml/theme 'respectful)
-;;   (setq sml/active-background-color "black")
-;;   (sml/setup))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Language General ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(use-package whitespace-cleanup-mode
-  :init
-  (progn
-    (setq-default indent-tabs-mode nil)
-    (global-whitespace-cleanup-mode)))
-
-(use-package diff-mode
-  :defer t
-  :config (add-hook 'diff-mode-hook #'read-only-mode))
-
-(use-package paren
-  :config (show-paren-mode))
-
-(use-package ggtags
-  :defer t
-  :init
-  (progn
-    (add-hook 'c-mode-common-hook
-              (lambda ()
-                (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
-                  (ggtags-mode 1))))))
+;;;; Snippets & Templates
 
 (use-package yasnippet
+  :diminish yas-minor-mode
   :config
-  (require 'setup-yasnippet))
+  (yas-global-mode 1))
+
+;;;; Syntax Checking
 
 (use-package flycheck
-  :init (global-flycheck-mode))
+  :config
+  (global-flycheck-mode 1))
+
+;;;; Git Integration
+
+(use-package git-link
+  :bind (("C-M-;" . git-link-homepage)
+         ("C-M-'" . git-link))
+  :config
+  (setq git-link-open-in-browser t))
+
+;;;; Help & Discovery
+
+(use-package which-key
+  :diminish
+  :config
+  (which-key-mode 1))
+
+;;;; Shell Integration
+
+(use-package bash-completion
+  :config
+  (bash-completion-setup))
+
+;;;; Theme
+
+(use-package zenburn-theme
+  :config
+  (load-theme 'zenburn t)
+  (set-face-attribute 'region nil :background "#555"))
+
+;;;; Code Navigation
+
+(use-package ggtags
+  :hook ((c-mode c++-mode java-mode) . ggtags-mode))
+
+;;;; Whitespace & Formatting
+
+(use-package whitespace-cleanup-mode
+  :diminish
+  :config
+  (setq-default indent-tabs-mode nil)
+  (global-whitespace-cleanup-mode 1))
 
 (provide 'default-packages)
 ;;; default-packages.el ends here

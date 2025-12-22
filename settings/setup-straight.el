@@ -1,28 +1,36 @@
-;;; setup-straight.el --- bootstrapping straight.el
+;;; setup-straight.el --- Bootstrap straight.el package manager -*- lexical-binding: t; -*-
 
 ;;; Commentary:
-
-;; Set up straight.el, a package manager
+;;
+;; This file bootstraps straight.el, a next-generation package manager for Emacs.
+;; It also configures use-package integration.
+;;
+;; Reference: https://github.com/radian-software/straight.el
 
 ;;; Code:
 
-;; from https://github.com/raxod502/straight.el#getting-started
-(defvar bootstrap-version)
+(defvar bootstrap-version nil
+  "Version number for straight.el bootstrap.")
+
 (let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 5))
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
         (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
          'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
+;; Install use-package via straight.el
 (straight-use-package 'use-package)
 
-;; to use use-package style
+;; Make use-package use straight.el by default
 (setq straight-use-package-by-default t)
 
 (provide 'setup-straight)

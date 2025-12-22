@@ -1,34 +1,31 @@
-;; settings for all env
+;;; global.el --- Global settings for all environments -*- lexical-binding: t; -*-
 
-;; Turn off mouse interface early in startup to avoid momentary display
-;; (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
-(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+;;; Commentary:
+;;
+;; General Emacs settings that apply across all modes and environments.
 
-;; No splash screen please ... jeez
-(setq inhibit-startup-message t)
+;;; Code:
 
-;; Make backups of files, even when they're in version control
-(setq vc-make-backup-files t)
+;; Platform detection
+(defvar is-mac (eq system-type 'darwin)
+  "Non-nil if running on macOS.")
 
-;; Are we on a mac?
-(setq is-mac (equal system-type 'darwin))
+;; Backup settings
+(setq vc-make-backup-files t)  ; Make backups even for version-controlled files
 
-(setq font-lock-maximum-decoration t
-      truncate-partial-width-windows nil)
+;; Display settings
+(setq font-lock-maximum-decoration t)
+(setq truncate-partial-width-windows nil)
 
 ;; Highlight current line
-(global-hl-line-mode t)
+(global-hl-line-mode 1)
 
-;; Don't defer screen updates when performing operations
-(setq redisplay-dont-pause t)
-
-;; Highlight matching parentheses when the point is on them.
+;; Highlight matching parentheses
 (show-paren-mode 1)
 
+;; Window system specific settings
 (when window-system
-  (setq frame-title-format '(buffer-file-name "%f" ("%b")))
-  (tooltip-mode -1)
-  (blink-cursor-mode -1))
+  (setq frame-title-format '(buffer-file-name "%f" ("%b"))))
 
 (provide 'global)
+;;; global.el ends here
