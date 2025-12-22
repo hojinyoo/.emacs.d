@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;; Allow pasting selection outside of Emacs
 (setq x-select-enable-clipboard t)
 
