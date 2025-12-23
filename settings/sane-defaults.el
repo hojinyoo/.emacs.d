@@ -44,6 +44,10 @@
 ;; Move files to trash when deleting
 (setq delete-by-moving-to-trash t)
 
+;; Write backup files to own directory
+(setq backup-directory-alist
+      `(("." . ,(expand-file-name "backups" user-emacs-directory))))
+
 ;; Transparently open compressed files
 (auto-compression-mode 1)
 
