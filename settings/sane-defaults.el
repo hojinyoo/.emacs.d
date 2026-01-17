@@ -103,6 +103,9 @@
 (setq line-number-mode t)
 (setq column-number-mode t)
 
+;; Toggle line wrapping
+(global-set-key (kbd "C-c w") #'toggle-truncate-lines)
+
 ;; Answering just 'y' or 'n' will do
 (defalias 'yes-or-no-p 'y-or-n-p)
 
