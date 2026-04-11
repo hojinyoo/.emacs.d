@@ -15,6 +15,57 @@ git clone <repo-url> ~/.emacs.d
 
 Packages are installed automatically on first launch.
 
+## Package Management
+
+This config bootstraps `straight.el` in `settings/setup-straight.el` and enables `use-package` integration by default.
+
+Most packages live in `settings/default-packages.el`. The usual workflow is:
+
+1. Add or edit a `use-package` form in `settings/default-packages.el` or another file under `settings/`.
+2. Restart Emacs, or run `M-x eval-buffer` on the file you changed.
+3. Let `straight.el` clone and build the package on first load.
+
+For quick one-off installs from inside Emacs:
+
+- `M-x straight-use-package RET package-name RET`
+
+Useful `straight.el` commands:
+
+- `M-x straight-check-all` to see package status.
+- `M-x straight-pull-package RET package-name RET` to update one package repo.
+- `M-x straight-pull-all` to update every package repo.
+- `M-x straight-rebuild-package RET package-name RET` to rebuild one package after an update.
+- `M-x straight-rebuild-all` to rebuild everything if compiled artifacts get out of sync.
+- `M-x straight-prune-build` to remove stale build artifacts.
+- `M-x straight-prune-all` to remove unused repositories and build output.
+
+## Upgrading Packages
+
+For routine upgrades:
+
+1. Run `M-x straight-pull-all`.
+2. Run `M-x straight-rebuild-all` if a package fails to load, native compilation changes, or APIs moved.
+3. Restart Emacs.
+4. Run `make lint` from `~/.emacs.d` before committing config changes.
+
+For a targeted package upgrade:
+
+1. Run `M-x straight-pull-package RET package-name RET`.
+2. Run `M-x straight-rebuild-package RET package-name RET`.
+3. Restart Emacs and confirm the affected workflow still works.
+
+If an updated package breaks, use `git log` inside `straight/repos/<package>` to inspect what changed, or temporarily pin/revert that repo until the config is updated.
+
+## Version Locking
+
+This repo does not currently track a `versions/default.el` lockfile. That keeps updates simple, but it also means fresh clones follow the latest upstream package revisions.
+
+If you want reproducible package versions later:
+
+1. Run `M-x straight-freeze-versions`.
+2. Commit `versions/default.el`.
+3. Run `M-x straight-thaw-versions` on another machine after cloning.
+
 ## Key Packages
 
 - **Completion**: Ivy, Counsel, Swiper

@@ -79,8 +79,8 @@
 ;; Easily navigate camelCase words
 (global-subword-mode 1)
 
-;; Don't break lines automatically
-(setq-default truncate-lines t)
+;; Wrap long lines at word boundaries instead of truncating them
+(setq-default truncate-lines nil)
 
 ;; Allow recursive minibuffers
 (setq enable-recursive-minibuffers t)
@@ -102,6 +102,12 @@
 ;; Always display line and column numbers
 (setq line-number-mode t)
 (setq column-number-mode t)
+
+;; Wrap long lines visually in all text buffers by default
+(global-visual-line-mode 1)
+
+;; Toggle visual line wrapping for the current buffer
+(global-set-key (kbd "C-c w") #'visual-line-mode)
 
 ;; Answering just 'y' or 'n' will do
 (defalias 'yes-or-no-p 'y-or-n-p)
