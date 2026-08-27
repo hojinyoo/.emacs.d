@@ -40,24 +40,25 @@ mouse-select + Cmd-C/V keep working."
 
 ;; GUI Emacs talks to the pasteboard by itself. A TTY needs a helper:
 ;; pbcopy on macOS, wl-copy/xclip on Linux. This xclip build has no OSC 52.
+(defun setup-tty--enable-clipboard ()
+  "Enable `xclip-mode' on TTY frames."
+  (unless (or (display-graphic-p) noninteractive)
+    (setq xclip-method
+          (cond ((eq system-type 'darwin) 'pbpaste)
+                ((executable-find "wl-copy") 'wl-copy)
+                ((executable-find "xclip") 'xclip)
+                ((executable-find "xsel") 'xsel)
+                (xclip-method)))
+    (setq xclip-program (pcase xclip-method
+                          ('pbpaste "pbpaste")
+                          ('wl-copy "wl-copy")
+                          ('xclip "xclip")
+                          ('xsel "xsel")
+                          (method (symbol-name method))))
+    (xclip-mode 1)))
+
 (use-package xclip
   :config
-  (defun setup-tty--enable-clipboard ()
-    "Enable `xclip-mode' on TTY frames."
-    (unless (or (display-graphic-p) noninteractive)
-      (setq xclip-method
-            (cond ((eq system-type 'darwin) 'pbpaste)
-                  ((executable-find "wl-copy") 'wl-copy)
-                  ((executable-find "xclip") 'xclip)
-                  ((executable-find "xsel") 'xsel)
-                  (xclip-method)))
-      (setq xclip-program (pcase xclip-method
-                            ('pbpaste "pbpaste")
-                            ('wl-copy "wl-copy")
-                            ('xclip "xclip")
-                            ('xsel "xsel")
-                            (method (symbol-name method))))
-      (xclip-mode 1)))
   (add-hook 'tty-setup-hook #'setup-tty--enable-clipboard)
   (setup-tty--enable-clipboard))
 

@@ -77,8 +77,9 @@ For routine upgrades:
 
 1. Run `M-x straight-pull-all`.
 2. Run `M-x straight-rebuild-all` if a package fails to load, native compilation changes, or APIs moved.
-3. Restart Emacs.
-4. Run `make lint` from `~/.emacs.d` before committing config changes.
+3. Run `make native` from `~/.emacs.d` so the next session does not JIT-compile on the fly. Native-comp on macOS needs Homebrew gcc's `libemutls_w` on `LIBRARY_PATH` (set in `early-init.el`).
+4. Restart Emacs.
+5. Run `make lint` from `~/.emacs.d` before committing config changes.
 
 For a targeted package upgrade:
 
@@ -110,6 +111,7 @@ If you want reproducible package versions later:
 
 ```bash
 make lint    # Byte-compile all tracked .el files
+make native  # Native-compile config + packages to .eln
 make clean   # Remove .elc files
 ```
 
