@@ -1,4 +1,4 @@
-.PHONY: lint clean help
+.PHONY: lint native clean help
 
 EMACS ?= emacs
 EMACS_FLAGS = --batch --quick
@@ -17,6 +17,7 @@ help:
 	@echo ""
 	@echo "Usage:"
 	@echo "  make lint   - Byte-compile all tracked .el files"
+	@echo "  make native - Native-compile config + straight packages to .eln"
 	@echo "  make clean  - Remove compiled .elc files"
 	@echo ""
 
@@ -30,6 +31,12 @@ lint:
 		-f batch-byte-compile \
 		$(GIT_EL_FILES)
 	@echo "✅ Lint passed!"
+
+native:
+	@echo "Native-compiling config and straight packages..."
+	@$(EMACS) --batch -l early-init.el -l init.el -l settings/native-compile-all.el \
+		--eval "(kill-emacs (if (native-compile-all) 0 1))"
+	@echo "✅ Native compile finished!"
 
 clean:
 	@echo "Removing .elc files..."
