@@ -28,6 +28,10 @@
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
 
+;; TTY menu bar costs a whole screen line; off in GUI too.
+(when (fboundp 'menu-bar-mode)
+  (menu-bar-mode -1))
+
 (when (fboundp 'tooltip-mode)
   (tooltip-mode -1))
 

@@ -13,22 +13,22 @@
 
 ;;;; Modifier Keys
 
-;; Use Command as Meta, Option as Super
-(setq mac-option-modifier 'super)
-(setq mac-command-modifier 'meta)
-(setq ns-function-modifier 'hyper)
+;; NS/macOS GUI only. In a terminal, Meta comes from the emulator
+;; (Ghostty: left Option as Alt) and Command is not an Emacs modifier.
+(when (display-graphic-p)
+  (setq mac-option-modifier 'super)
+  (setq mac-command-modifier 'meta)
+  (setq ns-function-modifier 'hyper)
+  ;; Don't open files from Finder in a new frame
+  (setq ns-pop-up-frames nil))
 
 ;;;; Environment Variables
 
-;; Import PATH and other environment variables from shell
-(use-package exec-path-from-shell
-  :config
-  (exec-path-from-shell-initialize))
-
-;;;; macOS Integration
-
-;; Don't open files from Finder in a new frame
-(setq ns-pop-up-frames nil)
+;; GUI Emacs.app does not inherit the shell PATH. `emacs -nw` already does.
+(when (display-graphic-p)
+  (use-package exec-path-from-shell
+    :config
+    (exec-path-from-shell-initialize)))
 
 ;; Use macOS trash
 (setq trash-directory "~/.Trash/emacs")

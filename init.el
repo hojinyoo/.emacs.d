@@ -25,5 +25,8 @@
 (when is-mac
   (require 'setup-mac))
 
+;; TTY + GUI: self-guards so emacs -nw and Emacs.app share this config
+(require 'setup-tty)
+
 (provide 'init)
 ;;; init.el ends here

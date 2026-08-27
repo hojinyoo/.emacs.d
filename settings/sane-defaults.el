@@ -138,8 +138,13 @@
 ;; Window configuration undo/redo
 (winner-mode 1)
 
-;; Navigate windows with Shift+Arrow
+;; Navigate windows with Shift+Arrow (GUI). Terminals often swallow that
+;; chord, so C-c C-<arrow> is the TTY-safe equivalent.
 (windmove-default-keybindings)
+(global-set-key (kbd "C-c C-<left>")  #'windmove-left)
+(global-set-key (kbd "C-c C-<right>") #'windmove-right)
+(global-set-key (kbd "C-c C-<up>")    #'windmove-up)
+(global-set-key (kbd "C-c C-<down>")  #'windmove-down)
 
 ;;;; Diff & Ediff
 
