@@ -7,6 +7,8 @@
 
 ;;; Code:
 
+(use-package diminish)
+
 ;;;; Completion Framework (Ivy/Counsel)
 
 (use-package ivy
@@ -57,7 +59,9 @@
 ;;;; Editing Enhancements
 
 (use-package expand-region
-  :bind ("C-=" . er/expand-region)
+  :bind (("C-=" . er/expand-region)
+         ;; C-= often never reaches Emacs in a TTY
+         ("C-c =" . er/expand-region))
   :config
   (setq expand-region-fast-keys-enabled nil)
   (setq er--show-expansion-message t))
@@ -76,7 +80,12 @@
   :bind (("C-S-c C-S-c" . mc/edit-lines)
          ("C->" . mc/mark-next-like-this)
          ("C-<" . mc/mark-previous-like-this)
-         ("C-c C-<" . mc/mark-all-like-this)))
+         ("C-c C-<" . mc/mark-all-like-this)
+         ;; Ctrl/Shift chords above are frequently eaten by the terminal
+         ("C-c m e" . mc/edit-lines)
+         ("C-c m n" . mc/mark-next-like-this)
+         ("C-c m p" . mc/mark-previous-like-this)
+         ("C-c m a" . mc/mark-all-like-this)))
 
 (use-package vundo
   :bind ("C-x u" . vundo)
@@ -121,7 +130,9 @@
 
 (use-package git-link
   :bind (("C-M-;" . git-link-homepage)
-         ("C-M-'" . git-link))
+         ("C-M-'" . git-link)
+         ("C-c g h" . git-link-homepage)
+         ("C-c g l" . git-link))
   :config
   (setq git-link-open-in-browser t))
 

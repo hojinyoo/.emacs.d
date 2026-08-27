@@ -11,6 +11,8 @@
 
 ;; Allow pasting selection outside of Emacs
 (setq select-enable-clipboard t)
+;; Keep an external copy on the kill-ring so C-w does not eat a Cmd-C paste.
+(setq save-interprogram-paste-before-kill t)
 
 ;; Remove text in active region if inserting text
 (delete-selection-mode 1)
@@ -138,8 +140,13 @@
 ;; Window configuration undo/redo
 (winner-mode 1)
 
-;; Navigate windows with Shift+Arrow
+;; Navigate windows with Shift+Arrow (GUI). Terminals often swallow that
+;; chord, so C-c C-<arrow> is the TTY-safe equivalent.
 (windmove-default-keybindings)
+(global-set-key (kbd "C-c C-<left>")  #'windmove-left)
+(global-set-key (kbd "C-c C-<right>") #'windmove-right)
+(global-set-key (kbd "C-c C-<up>")    #'windmove-up)
+(global-set-key (kbd "C-c C-<down>")  #'windmove-down)
 
 ;;;; Diff & Ediff
 

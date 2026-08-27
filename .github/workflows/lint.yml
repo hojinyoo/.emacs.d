@@ -2,12 +2,12 @@ name: Lint Emacs Lisp
 
 on:
   push:
-    branches: [master, main]
+    branches: [master, main, basic]
     paths:
       - '**.el'
       - 'Makefile'
   pull_request:
-    branches: [master, main]
+    branches: [master, main, basic]
     paths:
       - '**.el'
       - 'Makefile'

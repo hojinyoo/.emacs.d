@@ -15,6 +15,38 @@ git clone <repo-url> ~/.emacs.d
 
 Packages are installed automatically on first launch.
 
+## Terminal Emacs
+
+This config is meant to run as `emacs -nw`. GUI Emacs.app still works; NS-only
+settings (Command-as-Meta, exec-path-from-shell) stay behind `display-graphic-p`.
+
+```bash
+emacs -nw
+# or, with the shell wrapper: `emacs` (TTY) / `emacs --gui` (window)
+```
+
+Ghostty already sends left Option as Alt, so Meta chords work. Tmux needs
+24-bit color (`terminal-features RGB`) or zenburn falls back to 256-color.
+
+Copy/paste in a TTY:
+
+- Mouse-drag then `Cmd-C` / `Cmd-V` is the terminal's clipboard (Emacs does
+  not steal the mouse).
+- Emacs `M-w` / `C-w` / `C-y` sync with the macOS pasteboard via pbcopy.
+- `Cmd-W` is copy (`s-w`); GUI Emacs mapped Command to Meta, so this was `M-w`.
+
+TTY-safe keys (the GUI chords are kept; terminals often never send them):
+
+| Command | GUI | Terminal |
+| --- | --- | --- |
+| expand-region | `C-=` | `C-c =` |
+| mc/edit-lines | `C-S-c C-S-c` | `C-c m e` |
+| mc/mark-next-like-this | `C->` | `C-c m n` |
+| mc/mark-previous-like-this | `C-<` | `C-c m p` |
+| mc/mark-all-like-this | `C-c C-<` | `C-c m a` |
+| windmove | `S-<arrow>` | `C-c C-<arrow>` |
+| git-link | `C-M-'` / `C-M-;` | `C-c g l` / `C-c g h` |
+
 ## Package Management
 
 This config bootstraps `straight.el` in `settings/setup-straight.el` and enables `use-package` integration by default.
