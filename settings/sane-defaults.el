@@ -11,6 +11,8 @@
 
 ;; Allow pasting selection outside of Emacs
 (setq select-enable-clipboard t)
+;; Keep an external copy on the kill-ring so C-w does not eat a Cmd-C paste.
+(setq save-interprogram-paste-before-kill t)
 
 ;; Remove text in active region if inserting text
 (delete-selection-mode 1)

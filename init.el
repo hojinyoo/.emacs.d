@@ -28,5 +28,8 @@
 ;; TTY + GUI: self-guards so emacs -nw and Emacs.app share this config
 (require 'setup-tty)
 
+(when (and (boundp 'custom-file) (file-exists-p custom-file))
+  (load custom-file nil 'nomessage))
+
 (provide 'init)
 ;;; init.el ends here

@@ -28,6 +28,13 @@ emacs -nw
 Ghostty already sends left Option as Alt, so Meta chords work. Tmux needs
 24-bit color (`terminal-features RGB`) or zenburn falls back to 256-color.
 
+Copy/paste in a TTY:
+
+- Mouse-drag then `Cmd-C` / `Cmd-V` is the terminal's clipboard (Emacs does
+  not steal the mouse).
+- Emacs `M-w` / `C-w` / `C-y` sync with the macOS pasteboard via pbcopy.
+- `Cmd-W` is copy (`s-w`); GUI Emacs mapped Command to Meta, so this was `M-w`.
+
 TTY-safe keys (the GUI chords are kept; terminals often never send them):
 
 | Command | GUI | Terminal |
